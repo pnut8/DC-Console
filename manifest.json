@@ -10,5 +10,6 @@
       "js": ["content.js"]
     }
   ],
+  "icons": { "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "update_url": "https://raw.githubusercontent.com/pnut8/DC-Console/refs/heads/main/updates.xml"
 }

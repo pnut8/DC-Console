@@ -7,7 +7,7 @@ function isWhitelisted() {
   return whitelist.some((domain) => currentDomain.endsWith(domain));
 }
 
-// Block file input elements
+// Function to block file input elements
 function blockFileInputs() {
   if (!isWhitelisted()) {
     const fileInputs = document.querySelectorAll('input[type="file"]');
@@ -19,7 +19,7 @@ function blockFileInputs() {
   }
 }
 
-// Block drag-and-drop functionality
+// Function to block drag-and-drop functionality
 function blockDragAndDrop(event) {
   if (!isWhitelisted()) {
     event.preventDefault();
@@ -30,15 +30,14 @@ function blockDragAndDrop(event) {
 }
 
 // Add event listeners for drag-and-drop at the document level
-document.addEventListener("dragover", blockDragAndDrop, false);
-document.addEventListener("drop", blockDragAndDrop, false);
-document.addEventListener("dragenter", blockDragAndDrop, false);
-document.addEventListener("dragleave", blockDragAndDrop, false);
+["dragover", "drop", "dragenter", "dragleave"].forEach((eventType) => {
+  document.addEventListener(eventType, blockDragAndDrop, false);
+});
 
 // Function to observe and block new file inputs and drag-and-drop areas
 function observeDOMChanges() {
   const observer = new MutationObserver(() => {
-    blockFileInputs(); // Reapply blocking to new file inputs
+    setTimeout(blockFileInputs, 100); // Debounce the call to prevent performance issues
   });
 
   observer.observe(document.body, {
